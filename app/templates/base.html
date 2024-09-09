@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
     <head>
@@ -6,14 +7,39 @@
       <title>Jonquillebois - {% block title %}{% endblock title %}</title>
       <meta name="description" content="Artisan ébeniste, spécialisé dans l’agencement d’intérieur et la réalisation de mobilier sur mesure.">
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      <link rel="stylesheet" href="">
       {% load bootstrap5 %}
       {% bootstrap_css %}
       {% bootstrap_javascript %}
+      <link rel="stylesheet" href="{% static 'css/app.css' %}">
     </head>
-
     <body>
+      <header>
+        <div class="container-fluid">
+          <div class="row">
+            <nav class="navbar fixed-top navbar-expand-md navbar-light px-5">
+                <a href="#">
+                  <img src="assets/logo-JonquilleBois-nav.png" id="logoNavbarJonquilleBois" alt="jonquilleBois logo" class="img-fluid">
+                  <span class="hidden">jonquilleBois</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#toggleMobileMenu" aria-controls="toggleMobileMenu" aria-expanded="false"
+                      aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="toggleMobileMenu" data-target=".navbar-collapse" data-toggle="collapse">
+                  <ul class="navbar-nav ms-auto text-center">
+                    <li><a class="nav-link mx-3 active" href="#" id="lien1">ACCUEIL</a></li>
+                    <li><a class="nav-link mx-3" href="{% url 'arrangement' %}" id="lien2">AGENCEMENT</a></li>
+                    <li><a class="nav-link mx-3" href="{% url 'furnitures' %}" id="lien3">MOBILIER</a></li>
+                    <li><a class="nav-link mx-3" href="{% url 'contact' %}" id="lien4">CONTACT</a></li>
+                    <li><a class="nav-link mx-3" id="lien5" target="_blank" href="https://www.instagram.com/jonquilleBois/">
+                    <i class="fab fa-instagram"></i><span class="hidden">Instagram</span></a></li>
+                  </ul>
+               </div>
+            </nav>
+          </div>
+        </div>
+      </header>
     {% block content %}{% endblock content %}
-    <script src="" async defer></script>
     </body>
 </html>
