@@ -1,5 +1,27 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Accueil{% endblock %}
+
 {% block content %}
-    <h2>Home page</h2>
+<div class="container-fluid">
+    <div class="row pt-5">
+        <img src="{% static 'img/atelier_jonquillebois.jpg' %}" alt="atelier jonquillebois" class="img-fluid">
+    </div>
+</div>
+<div class="container mt-4">
+    <div class="row pt-md-3 px-auto d-flex justify-content-center align-items-center">
+        <div class="col-sm-12 col-md-6 ps-md-4">
+            <h1>Présentation</h1>
+            <p class="lead mt-2"> L’atelier JonquilleBois vous accueille pour la réalisation de vos projets
+                d’ébénisterie et de menuiserie sur mesure. Spécialisé dans l’agencement d’intérieur (dressing,
+                bibliothèque, portes...) et la réalisation de mobiliers (table, buffet, assises...), n’hésitez
+                pas à nous contacter pour donner vie à vos envies. </p>
+        </div>
+        <div class="col-sm-12 col-md-6 d-flex justify-content-center ps-md-5">
+            <img src="{% static 'img/photo-louis-R.jpg' %}" alt="Louis Rafin, ébéniste JonquilleBois" title="Louis Rafin, artisan ébéniste"
+                class="img-fluid mt-2 mt-md-0" id="louis">
+        </div>
+    </div>
+</div>
+</main>
 {% endblock content %}
