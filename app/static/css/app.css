@@ -62,13 +62,9 @@ a{
     width:85%;
 }
 
-.fa-instagram{
-    transition: all 0.3s ease-in-out 0s !important;
-}
-
-.fa-instagram{
-    transform: rotate(360deg);
-    transition: all 0.3s ease-in-out 0s;
+#instagram{
+    max-width: 16px;
+    margin-top:-5px;
 }
 
 main{

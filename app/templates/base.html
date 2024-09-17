@@ -7,35 +7,38 @@
       <title>JonquilleBois - {% block title %}{% endblock title %}</title>
       <meta name="description" content="Artisan ébeniste, spécialisé dans l’agencement d’intérieur et la réalisation de mobilier sur mesure.">
       <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favicon/apple-touch-icon.png' %}">
+      <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon/favicon-32x32.png' %}">
+      <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon/favicon-16x16.png' %}">
+      <link rel="manifest" href="{% static 'img/favicon/site.manifest' %}">
       {% load bootstrap5 %}
       {% bootstrap_css %}
-      {% bootstrap_javascript %}
       <link rel="stylesheet" href="{% static 'css/app.css' %}">
     </head>
     <body>
       <header>
-        <div class="container-fluid">
+        <div class="container">
           <div class="row">
-            <nav class="navbar fixed-top navbar-expand-md navbar-light px-5">
-                <a href="#">
-                  <img src="{% static 'img/jonquillebois-logo.png' %}" id="logoNavbarJonquilleBois" alt="jonquillebois logo" class="img-fluid">
-                  <span class="hidden">JonquilleBois</span>
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                      data-bs-target="#toggleMobileMenu" aria-controls="toggleMobileMenu" aria-expanded="false"
-                      aria-label="Toggle navigation">
-                      <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="toggleMobileMenu" data-target=".navbar-collapse" data-toggle="collapse">
-                  <ul class="navbar-nav ms-auto text-center">
-                    <li><a class="nav-link mx-3 " href="{% url 'home' %}">ACCUEIL</a></li>
-                    <li><a class="nav-link mx-3" href="{% url 'arrangement' %}">AGENCEMENT</a></li>
-                    <li><a class="nav-link mx-3" href="{% url 'furnitures' %}">MOBILIER</a></li>
-                    <li><a class="nav-link mx-3" href="{% url 'contact' %}">CONTACT</a></li>
-                    <li><a class="nav-link mx-3" target="_blank" href="https://www.instagram.com/jonquilleBois/">
-                    insta</i><span class="hidden">Instagram</span></a></li>
-                  </ul>
-               </div>
+            <nav class="navbar fixed-top navbar-expand-md navbar-light px-5" role="navigation">
+              <a href="#">
+                <img src="{% static 'img/jonquillebois-logo.svg' %}" id="logoNavbarJonquilleBois" alt="jonquillebois logo" class="img-fluid">
+                <span class="hidden">JonquilleBois</span>
+              </a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#toggleMobileMenu" aria-controls="toggleMobileMenu" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="toggleMobileMenu" data-target=".navbar-collapse" data-toggle="collapse">
+                <ul class="navbar-nav ms-auto text-center">
+                  <li><a class="nav-link m-3 {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">ACCUEIL</a></li>
+                  <li><a class="nav-link m-3 {% if request.path == '/agencement' %}active{% endif %}" href="{% url 'arrangement' %}">AGENCEMENT</a></li>
+                  <li><a class="nav-link m-3 {% if request.path == '/mobilier' %}active{% endif %}" href="{% url 'furnitures' %}">MOBILIER</a></li>
+                  <li><a class="nav-link m-3 {% if request.path == '/contact' %}active{% endif %}" href="{% url 'contact' %}">CONTACT</a></li>
+                  <li><a class="nav-link m-3" target="_blank" href="https://www.instagram.com/jonquilleBois/">
+                    <img src="{% static 'img/instagram.svg' %}" id="instagram"></a></li>
+                </ul>
+              </div>
             </nav>
           </div>
         </div>
@@ -50,6 +53,7 @@
             </div>
         </div>
     </footer>
+    {% bootstrap_javascript %}
     <link type="text/javascript" src="{% static 'js/app.js' %}">
     </body>
 </html>
