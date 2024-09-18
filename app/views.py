@@ -1,7 +1,8 @@
 import logging
 from django.db import DatabaseError
-from django.http import HttpResponseServerError
+from django.http import HttpResponseServerError, HttpResponse
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth import get_user_model
 
 from app.models import Arrangement, Furniture
 from app.utils import paginate_objects
@@ -76,4 +77,15 @@ def home(request):
   return render(request, 'home.html')
 
 def contact(request):
-  return render(request, 'contact.html')
+  user = get_user_model().objects.filter(first_name="Louis").first()
+  if user is None:
+    context={
+      'phone' : '',
+      'address': ''
+    }
+  else:
+    context = {
+      'phone': user.phone,
+      'address': user.address,
+  }
+  return render(request, 'contact.html', context)

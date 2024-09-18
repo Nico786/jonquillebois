@@ -209,3 +209,13 @@ footer{
     text-decoration: none;
     color: black;
 }
+
+#logo-phone, #logo-map, #logo-insta{
+    width: 20px;
+    height: 20px;
+}
+
+#infos-contact a{
+    text-decoration: none;
+    color: black;
+}
