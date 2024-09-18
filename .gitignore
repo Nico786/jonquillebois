@@ -1,20 +1,32 @@
-# Python
+**/__pycache__
 *.pyc
-*~
-__pycache__
+*.pyo
+*.pyd
+.Python
+pip-log.txt
 
-# Env
-.env
-myvenv/
-venv/
+.tox
+**/coverage
+.cache
+coverage.xml
+*.cover
 
-# Base de donnée
-db.sqlite3
+*.log
 
-# Dossier "static" à la racine du projet
-/static/
+.git
+.gitignore
 
-# Visual Studio
-.vscode/
-.history/
-*.code-workspace
+**/.vscode
+**/.aws
+**/.ssh
+Dockerfile
+.docker
+
+README.md
+**/.DS_Store
+
+**/.env
+**/venv
+**/myvenv
+**/env
+**/media
