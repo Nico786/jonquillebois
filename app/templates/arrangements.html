@@ -1,14 +1,35 @@
 {% extends "base.html" %}
 {% block title %}Agencement{% endblock %}
 {% block content %}
-    <h2 class="my-5 text-center">Agencement</h2>
-    {% if error %}
-    <p class="my-5 text-center">{{ error }}</p>
-    {% else %}
-    <ul>
-      {% for arrangement in arrangements %}
-        <li>{{ arrangement.title }} - {{ arrangement.description }}</li>
-      {% endfor %}
-    </ul>
+    <div class="container mt-5">
+        <h1 class="py-5 text-center">Agencement</h1>
+        {% if error %}
+        <p class="my-5 text-center">{{ error }}</p>
+        {% else %}
+        <div id="goTopPage" class="invisible">
+            <a href="#top">&#8593;</a>
+        </div>
+        <section class="section-agencement">
+            <div class="container">
+                <div class="row g-4">
+                    {% for arrangement in arrangements %}
+                    <div class="col-sm-12 col-md-4">
+                        <a href="#" class="d-block">
+                            <div class="card text-start w-100">
+                                <div class="card-img-wrapper">
+                                    <img src="{{ arrangement.picture.url }}" alt="{{ arrangement.title }}" class="card-img">
+                                </div>
+                                <div class="card-body">
+                                    <h4>{{ arrangement.title }}</h4>
+                                    <p class="card-text"><i>Plus d'informations...</i></p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+    </div>
   {% endif %}  
 {% endblock content %}
