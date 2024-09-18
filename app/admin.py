@@ -1,4 +1,4 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser, Arrangement, Furniture
 from django.core.exceptions import ValidationError
@@ -12,11 +12,10 @@ class RealisationAdmin(admin.ModelAdmin):
         try:
             obj.clean()
         except ValidationError as e:
-            # Affiche le message d'erreur si la validation échoue
             self.message_user(request, str(e), level=messages.ERROR)
             return
         super().save_model(request, obj, form, change)
-        
+
 @admin.register(Arrangement)
 class ArrangementAdmin(RealisationAdmin):
     pass
@@ -24,5 +23,3 @@ class ArrangementAdmin(RealisationAdmin):
 @admin.register(Furniture)
 class FurnitureAdmin(RealisationAdmin):
     pass
-        
-
