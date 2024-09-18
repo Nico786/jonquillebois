@@ -1,6 +1,7 @@
 from django.db.models import Model
 from django.contrib.auth.models import AbstractUser
 from django.db.models import CharField, TextField, ImageField
+from django.core.exceptions import ValidationError
 
 class CustomUser(AbstractUser):
   phone = CharField(max_length=15, unique=True, null=True, blank=True, default="")
@@ -19,6 +20,11 @@ class Realisation(Model):
 
   def __str__(self):
     return self.title
+  
+  def clean(self):
+        super().clean()
+        if not self.picture:
+            raise ValidationError('La photo est requise pour valider la création.')
 
 class Arrangement(Realisation):
   class Meta:
