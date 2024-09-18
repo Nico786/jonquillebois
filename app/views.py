@@ -2,7 +2,9 @@ import logging
 from django.db import DatabaseError
 from django.http import HttpResponseServerError
 from django.shortcuts import render
+
 from app.models import Arrangement
+from app.utils import paginate_objects
 
 logger = logging.getLogger(__name__)
 
@@ -11,11 +13,12 @@ def home(request):
 
 def arrangement(request):
   try:
-    arrangements = Arrangement.objects.all()
-    if not arrangements.exists():
+    arrangements_list = Arrangement.objects.all()
+    page_obj = paginate_objects(request, arrangements_list, 9)
+    if not arrangements_list.exists():
       logger.warning("Aucune instance d'agencement trouvée dans la base de données.")
       return render(request, 'arrangements.html', {'error': "Aucune réalisation n'a encore été ajoutée."})
-    return render(request, 'arrangements.html', {'arrangements': arrangements})
+    return render(request, 'arrangements.html', {'page_obj': page_obj})
   except DatabaseError as e:
       logger.error(f"Erreur de la base de données : {str(e)}")
       return HttpResponseServerError("Erreur de la base de données. Veuillez réessayer plus tard.")
