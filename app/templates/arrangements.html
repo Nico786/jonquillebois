@@ -1,32 +1,5 @@
 {% extends "base.html" %}
 {% block title %}Agencement{% endblock %}
 {% block content %}
-    <div class="container mt-5">
-        <h1 class="py-5 text-center">Agencement</h1>
-        {% if error %}
-        <p class="my-5 text-center">{{ error }}</p>
-        {% else %}
-        <section class="section-agencement">
-            <div class="container">
-                <div class="row g-4">
-                    {% for arrangement in page_obj %}
-                    <div class="col-sm-12 col-md-4">
-                        <a href="{% url 'arrangement_detail' pk=arrangement.pk %}" class="d-block">
-                            <div class="card text-start w-100">
-                                <div class="card-img-wrapper">
-                                    <img src="{{ arrangement.main_picture.url }}" alt="{{ arrangement.title }}" class="card-img">
-                                </div>
-                                <div class="card-body">
-                                    <h4>{{ arrangement.title }}</h4>
-                                    <p class="card-text"><i>Plus d'informations...</i></p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </section>
-    </div>
-  {% endif %}  
-{% endblock content %}
+    {% include 'partials/_item_list.html' with title="Agencement" page_obj=page_obj error=error detail_url='arrangement_detail' %}
+{% endblock %}

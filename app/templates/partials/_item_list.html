@@ -1,0 +1,28 @@
+<div class="container mt-5">
+  <h1 class="py-5 text-center">{{ title }}</h1>
+  {% if error %}
+  <p class="my-5 text-center">{{ error }}</p>
+  {% else %}
+  <section class="section-agencement">
+      <div class="container">
+          <div class="row g-4">
+              {% for item in page_obj %}
+              <div class="col-sm-12 col-md-4">
+                  <a href="{% url detail_url item.pk %}" class="d-block">
+                      <div class="card text-start w-100">
+                          <div class="card-img-wrapper">
+                              <img src="{{ item.main_picture.url }}" alt="{{ item.title }}" class="card-img">
+                          </div>
+                          <div class="card-body">
+                              <h4>{{ item.title }}</h4>
+                              <p class="card-text"><i>Plus d'informations...</i></p>
+                          </div>
+                      </div>
+                  </a>
+              </div>
+              {% endfor %}
+          </div>
+      </div>
+  </section>
+  {% endif %}
+</div>

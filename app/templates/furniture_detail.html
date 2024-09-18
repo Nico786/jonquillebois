@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}{{ furniture.title }}{% endblock %}
+{% block content %}
+    {% include 'partials/_item_detail.html' with item=furniture images=images list_url='furnitures' %}
+{% endblock %}

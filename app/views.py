@@ -3,7 +3,7 @@ from django.db import DatabaseError
 from django.http import HttpResponseServerError
 from django.shortcuts import render, get_object_or_404
 
-from app.models import Arrangement
+from app.models import Arrangement, Furniture
 from app.utils import paginate_objects
 
 logger = logging.getLogger(__name__)
@@ -41,7 +41,33 @@ def arrangement_detail(request, pk):
         return HttpResponseServerError(f"Erreur inattendue : {str(e)}")
 
 def furnitures(request):
-  return render(request, 'furnitures.html')
+  try:
+    furnitures_list = Furniture.objects.all()
+    page_obj = paginate_objects(request, furnitures_list, 9)
+    if not furnitures_list.exists():
+      logger.warning("Aucune instance de mobilier trouvée dans la base de données.")
+      return render(request, 'furnitures.html', {'error': "Aucune réalisation n'a encore été ajoutée."})
+    return render(request, 'furnitures.html', {'page_obj': page_obj})
+  except DatabaseError as e:
+      logger.error(f"Erreur de la base de données : {str(e)}")
+      return HttpResponseServerError("Erreur de la base de données. Veuillez réessayer plus tard.")
+  except Exception as e:
+    logger.critical(f"Erreur inattendue : {str(e)}")
+    return HttpResponseServerError(f"Erreur inattendue : {str(e)}")
+  
+def furniture_detail(request, pk):
+    try:
+      furniture = get_object_or_404(Furniture, pk=pk)
+      images = [furniture.main_picture] + [furniture.picture_2, furniture.picture_3, furniture.picture_4, furniture.picture_5]
+      # Filter out empty images
+      images = [img for img in images if img]
+      return render(request, 'furniture_detail.html', {'furniture': furniture, 'images': images})
+    except DatabaseError as e:
+      logger.error(f"Erreur de la base de données: {str(e)}")
+      return HttpResponseServerError("Erreur de la base de données. Veuillez réessayer plus tard.")
+    except Exception as e:
+      logger.critical(f"Erreur inattendue : {str(e)}")
+      return HttpResponseServerError(f"Erreur inattendue : {str(e)}")
 
 def contact(request):
   return render(request, 'contact.html')

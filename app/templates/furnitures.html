@@ -1,5 +1,5 @@
 {% extends "base.html" %}
 {% block title %}Mobilier{% endblock %}
 {% block content %}
-    <h2>Mobilier</h2>
+    {% include 'partials/_item_list.html' with title="Mobilier" page_obj=page_obj error=error detail_url='furniture_detail' %}
 {% endblock content %}

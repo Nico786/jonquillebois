@@ -1,36 +1,5 @@
 {% extends "base.html" %}
 {% block title %}{{ arrangement.title }}{% endblock %}
 {% block content %}
-<div class="container mt-5">
-    <div class="row align-items-stretch">
-        <div class="col-sm-12 col-md-4 justify-content-center">
-            <h1 class="py-5 text-center">{{ arrangement.title }}</h1>
-            <p class="lead">{{ arrangement.description }}</p>
-            <a href={% url 'arrangements' %} id="previous"><i>Retourner à la liste</i></a>
-        </div>
-        <div class=" py-5 col-sm-12 col-md-6 justify-content-center">
-            {% if images %}
-            <div id="photoCarousel" class="carousel slide" data-bs-ride="carousel">
-              <div class="carousel-inner">
-                  {% for image in images %}
-                  <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                      <img src="{{ image.url }}" class="d-block w-100" alt="Photo">
-                  </div>
-                  {% endfor %}
-              </div>
-              <button class="carousel-control-prev" type="button" data-bs-target="#photoCarousel" data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Précédent</span>
-              </button>
-              <button class="carousel-control-next" type="button" data-bs-target="#photoCarousel" data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Suivant</span>
-              </button>
-          </div>
-            {% else %}
-            <p>Aucune photo complémentaire disponible.</p>
-            {% endif %}
-        </div>
-    </div>
-</div>
+    {% include 'partials/_item_detail.html' with item=arrangement images=images list_url='arrangements' %}
 {% endblock %}
