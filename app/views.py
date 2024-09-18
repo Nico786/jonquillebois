@@ -1,9 +1,12 @@
 import logging
 from django.db import DatabaseError
-from django.http import HttpResponseServerError, HttpResponse
+from django.core.mail import EmailMessage
+from django.http import HttpResponseServerError
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import get_user_model
+from django.contrib import messages
 
+from app.forms import ContactForm
 from app.models import Arrangement, Furniture
 from app.utils import paginate_objects
 
@@ -77,15 +80,37 @@ def home(request):
   return render(request, 'home.html')
 
 def contact(request):
+  form = ContactForm(request.POST or None)
   user = get_user_model().objects.filter(first_name="Louis").first()
-  if user is None:
-    context={
-      'phone' : '',
-      'address': ''
-    }
-  else:
-    context = {
-      'phone': user.phone,
-      'address': user.address,
+  
+  if form.is_valid():
+    name = form.cleaned_data['name']
+    user_email = form.cleaned_data['email']  #mail de l'expediteur
+    subject = form.cleaned_data['subject']
+    message = form.cleaned_data['message']
+    full_message = f"Nom : {name}\nAdresse email : {user_email}\n\n{message}"
+    
+    if user and user.email:
+        try:
+          email = EmailMessage(
+            subject,
+            full_message,
+            user_email,  # Expéditeur (visiteur)
+            [user.email],  # Destinataire (user.email)
+            headers={'Reply-To': user_email}  # Pour que les réponses aillent à l'email fourni
+          )
+          email.send(fail_silently=False)
+          
+          messages.success(request, "Votre message a été envoyé avec succès.")
+        except Exception as e:
+          messages.error(request, f"Erreur lors de l'envoi de l'email : {str(e)}")
+          logger.exception(f"Erreur inattendue: {str(e)}")
+    else:
+      messages.error(request, "Impossible d'envoyer l'email pour le moment. Veuillez réessayer plus tard.")
+      
+  context = {
+    'form': form,
+    'phone': user.phone if user else '',
+    'address': user.address if user else ''
   }
   return render(request, 'contact.html', context)
