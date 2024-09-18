@@ -204,3 +204,8 @@ footer{
     border-color: #ffcc66;
     color: black;
 }
+
+#previous{
+    text-decoration: none;
+    color: black;
+}

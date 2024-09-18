@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
   const scrollToTopButton = document.getElementById('scrollToTop');
   window.addEventListener('scroll', function () {
-      console.log('Current scroll position:', window.scrollY);
 
       if (window.scrollY > 200) { 
           if (scrollToTopButton.style.display === 'none' || !scrollToTopButton.style.display) {
@@ -16,7 +15,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   scrollToTopButton.addEventListener('click', function (event) {
       event.preventDefault();
-      console.log('Scroll to Top button clicked');
       window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 });
@@ -29,7 +27,3 @@ navlinks.forEach((link) => {
   link.addEventListener("click", () => sousmenu.classList.remove("show"));
 });
 
-const titre = document.querySelector(".moreInfos");
-if (window.innerWidth >= 768) {
-  titre.classList.add("hidden");
-}

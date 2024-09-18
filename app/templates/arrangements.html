@@ -11,7 +11,7 @@
                 <div class="row g-4">
                     {% for arrangement in page_obj %}
                     <div class="col-sm-12 col-md-4">
-                        <a href="#" class="d-block">
+                        <a href="{% url 'arrangement_detail' pk=arrangement.pk %}" class="d-block">
                             <div class="card text-start w-100">
                                 <div class="card-img-wrapper">
                                     <img src="{{ arrangement.main_picture.url }}" alt="{{ arrangement.title }}" class="card-img">

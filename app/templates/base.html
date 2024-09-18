@@ -32,7 +32,7 @@
               <div class="collapse navbar-collapse" id="toggleMobileMenu" data-target=".navbar-collapse" data-toggle="collapse">
                 <ul class="navbar-nav ms-auto text-center">
                   <li><a class="nav-link m-3 {% if request.path == '/' %}active{% endif %}" href="{% url 'home' %}">ACCUEIL</a></li>
-                  <li><a class="nav-link m-3 {% if request.path == '/agencement' %}active{% endif %}" href="{% url 'arrangement' %}">AGENCEMENT</a></li>
+                  <li><a class="nav-link m-3 {% if request.path == '/agencement' %}active{% endif %}" href="{% url 'arrangements' %}">AGENCEMENT</a></li>
                   <li><a class="nav-link m-3 {% if request.path == '/mobilier' %}active{% endif %}" href="{% url 'furnitures' %}">MOBILIER</a></li>
                   <li><a class="nav-link m-3 {% if request.path == '/contact' %}active{% endif %}" href="{% url 'contact' %}">CONTACT</a></li>
                   <li><a class="nav-link m-3" target="_blank" href="https://www.instagram.com/jonquilleBois/">
