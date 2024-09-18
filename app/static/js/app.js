@@ -1,12 +1,24 @@
-//apparition de l'icone pour remonter en haut de la page
-const UpBtn = document.querySelector("#goTopPage");
+document.addEventListener('DOMContentLoaded', function () {
+  const scrollToTopButton = document.getElementById('scrollToTop');
+  window.addEventListener('scroll', function () {
+      console.log('Current scroll position:', window.scrollY);
 
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 700) {
-    UpBtn.classList.remove("invisible");
-  } else {
-    UpBtn.classList.add("invisible");
-  }
+      if (window.scrollY > 200) { 
+          if (scrollToTopButton.style.display === 'none' || !scrollToTopButton.style.display) {
+              scrollToTopButton.style.display = 'block';
+          }
+      } else {
+          if (scrollToTopButton.style.display === 'block') {
+              scrollToTopButton.style.display = 'none';
+          }
+      }
+  });
+
+  scrollToTopButton.addEventListener('click', function (event) {
+      event.preventDefault();
+      console.log('Scroll to Top button clicked');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
 });
 
 //disparition du menu déroulant au clic

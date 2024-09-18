@@ -29,6 +29,29 @@ a{
     opacity: 0;
 }
 
+#scrollToTop {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #5f616b;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+#scrollToTop:hover {
+    background-color: #3d3f41;
+}
+
+#scrollToTop i {
+    margin: 0;
+}
 
 .navbar .active{
     text-decoration: underline;
@@ -93,34 +116,6 @@ main{
     max-height:330px;
 }
 
-#goTopPage{
-    width:50px;
-    height:50px;
-    background:rgba(0, 0, 0, 0.692);
-    position:fixed;
-    bottom:65px;
-    right:0px;
-    border-radius:50px;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    opacity:0.5;
-    z-index:10;
-}
-
-#goTopPage:hover{
-    opacity:1;
-}
-
-#goTopPage a{
-    text-decoration:none;
-    text-align: center;
-    font-size: 2rem;
-    padding: 15px;
-    color:whitesmoke;
-    z-index:10;
-}
-
 
 .card {
     transition: all 0.3s ease; 
@@ -155,6 +150,8 @@ main{
     color: white;
     z-index: 1;
     padding: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
     opacity: 0;
     border-radius: 5px;
     box-shadow: 0 0 0 rgba(0, 0, 0, 0);
