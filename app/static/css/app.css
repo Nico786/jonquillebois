@@ -6,13 +6,16 @@
     box-sizing: border-box;
 }
 
-html{
+html, body{
     scroll-behavior: smooth;
+    font-family: 'Josefin Sans', sans-serif;
+    height: 100%;
 }
 
-body{
-    font-family: 'Josefin Sans', sans-serif;
-}
+body {
+    display: flex;
+    flex-direction: column;
+  }
 
 a{
     text-decoration: none;
@@ -70,7 +73,7 @@ a{
 main{
     padding-top: 50px;
     padding-bottom: 20px;
-    min-height: 100vh;
+    flex: 1 0 90%;
 }
 
 .previous{
@@ -184,5 +187,6 @@ main{
 
 footer{
     background-color: rgba(0, 0, 0, 0.596);
-    color:white
+    color:white;
+    flex: 0 0 10%;
 }
