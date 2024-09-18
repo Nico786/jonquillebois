@@ -8,66 +8,72 @@ from app.utils import paginate_objects
 
 logger = logging.getLogger(__name__)
 
-def home(request):
-  return render(request, 'home.html')
-
-def arrangements(request):
+def get_paginated_objects(request, model_class, template_name, context_name, error_message):
   try:
-    arrangements_list = Arrangement.objects.all()
-    page_obj = paginate_objects(request, arrangements_list, 9)
-    if not arrangements_list.exists():
-      logger.warning("Aucune instance d'agencement trouvée dans la base de données.")
-      return render(request, 'arrangements.html', {'error': "Aucune réalisation n'a encore été ajoutée."})
-    return render(request, 'arrangements.html', {'page_obj': page_obj})
+    objects_list = model_class.objects.all()
+    page_obj = paginate_objects(request, objects_list, 9)
+    if not objects_list.exists():
+      logger.warning(f"Aucune instance de {model_class.__name__.lower()} trouvée dans la base de données.")
+      return render(request, template_name, {context_name: [], 'error': error_message})
+    return render(request, template_name, {context_name: page_obj})
   except DatabaseError as e:
       logger.error(f"Erreur de la base de données : {str(e)}")
       return HttpResponseServerError("Erreur de la base de données. Veuillez réessayer plus tard.")
   except Exception as e:
-    logger.critical(f"Erreur inattendue : {str(e)}")
-    return HttpResponseServerError(f"Erreur inattendue : {str(e)}")
-  
-def arrangement_detail(request, pk):
-    try:
-        arrangement = get_object_or_404(Arrangement, pk=pk)
-        images = [arrangement.main_picture] + [arrangement.picture_2, arrangement.picture_3, arrangement.picture_4, arrangement.picture_5]
-        # Filter out empty images
-        images = [img for img in images if img]
-        return render(request, 'arrangement_detail.html', {'arrangement': arrangement, 'images': images})
-    except DatabaseError as e:
-        logger.error(f"Erreur de la base de données: {str(e)}")
-        return HttpResponseServerError("Erreur de la base de données. Veuillez réessayer plus tard.")
-    except Exception as e:
-        logger.critical(f"Erreur inattendue : {str(e)}")
-        return HttpResponseServerError(f"Erreur inattendue : {str(e)}")
-
-def furnitures(request):
-  try:
-    furnitures_list = Furniture.objects.all()
-    page_obj = paginate_objects(request, furnitures_list, 9)
-    if not furnitures_list.exists():
-      logger.warning("Aucune instance de mobilier trouvée dans la base de données.")
-      return render(request, 'furnitures.html', {'error': "Aucune réalisation n'a encore été ajoutée."})
-    return render(request, 'furnitures.html', {'page_obj': page_obj})
-  except DatabaseError as e:
-      logger.error(f"Erreur de la base de données : {str(e)}")
-      return HttpResponseServerError("Erreur de la base de données. Veuillez réessayer plus tard.")
-  except Exception as e:
-    logger.critical(f"Erreur inattendue : {str(e)}")
-    return HttpResponseServerError(f"Erreur inattendue : {str(e)}")
-  
-def furniture_detail(request, pk):
-    try:
-      furniture = get_object_or_404(Furniture, pk=pk)
-      images = [furniture.main_picture] + [furniture.picture_2, furniture.picture_3, furniture.picture_4, furniture.picture_5]
-      # Filter out empty images
-      images = [img for img in images if img]
-      return render(request, 'furniture_detail.html', {'furniture': furniture, 'images': images})
-    except DatabaseError as e:
-      logger.error(f"Erreur de la base de données: {str(e)}")
-      return HttpResponseServerError("Erreur de la base de données. Veuillez réessayer plus tard.")
-    except Exception as e:
       logger.critical(f"Erreur inattendue : {str(e)}")
       return HttpResponseServerError(f"Erreur inattendue : {str(e)}")
+
+def get_object_detail(request, model_class, pk, template_name, context_name):
+  try:
+    obj = get_object_or_404(model_class, pk=pk)
+    images = [obj.main_picture] + [obj.picture_2, obj.picture_3, obj.picture_4, obj.picture_5]
+    images = [img for img in images if img]
+    return render(request, template_name, {context_name: obj, 'images': images})
+  except DatabaseError as e:
+    logger.error(f"Erreur de la base de données : {str(e)}")
+    return HttpResponseServerError("Erreur de la base de données. Veuillez réessayer plus tard.")
+  except Exception as e:
+    logger.critical(f"Erreur inattendue : {str(e)}")
+    return HttpResponseServerError(f"Erreur inattendue : {str(e)}")
+      
+def arrangements(request):
+  return get_paginated_objects(
+    request,
+    Arrangement,
+    'arrangements.html',
+    'page_obj',
+    "Aucune réalisation n'a encore été ajoutée."
+  )
+    
+def arrangement_detail(request, pk):
+  return get_object_detail(
+    request,
+    Arrangement,
+    pk,
+    'arrangement_detail.html',
+    'arrangement'
+  )
+
+def furnitures(request):
+  return get_paginated_objects(
+    request,
+    Furniture,
+    'furnitures.html',
+    'page_obj',
+    "Aucune réalisation n'a encore été ajoutée."
+  )
+
+def furniture_detail(request, pk):
+  return get_object_detail(
+    request,
+    Furniture,
+    pk,
+    'furniture_detail.html',
+    'furniture'
+  )
+
+def home(request):
+  return render(request, 'home.html')
 
 def contact(request):
   return render(request, 'contact.html')
