@@ -18,6 +18,15 @@ SECRET_KEY = env.str('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=False)
 
+if not DEBUG:  # prod
+    CSRF_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+else:
+    CSRF_COOKIE_SECURE = False
+    SECURE_SSL_REDIRECT = False
+    SESSION_COOKIE_SECURE = False
+
 ALLOWED_HOSTS = ["127.0.0.1"]
 
 
