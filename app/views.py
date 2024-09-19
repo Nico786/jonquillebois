@@ -113,4 +113,4 @@ def contact(request):
     'phone': user.phone if user else '',
     'address': user.address if user else ''
   }
-  return render(request, 'contact.html', context)
+  return render(request, 'infos_contact.html', context)
