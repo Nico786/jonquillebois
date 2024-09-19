@@ -99,11 +99,11 @@ def contact(request):
             [user.email],  # Destinataire (user.email)
             headers={'Reply-To': user_email}  # Pour que les réponses aillent à l'email fourni
           )
+          print("Sending email...")
           email.send(fail_silently=False)
-          
           messages.success(request, "Votre message a été envoyé avec succès.")
         except Exception as e:
-          messages.error(request, f"Erreur lors de l'envoi de l'email : {str(e)}")
+          messages.error(request, "Impossible d'envoyer l'email pour le moment. Veuillez réessayer plus tard.")
           logger.exception(f"Erreur inattendue: {str(e)}")
     else:
       messages.error(request, "Impossible d'envoyer l'email pour le moment. Veuillez réessayer plus tard.")
