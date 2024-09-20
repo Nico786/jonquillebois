@@ -1,65 +1,21 @@
-name: Django CI
+name: Django # Name of the workflow
 
-on:
-  push:
-    branches: [ "dev" ]
-  pull_request:
-    branches: [ "dev" ]
+on: [push]  # Trigger the workflow on a push event to any branch in the repo
 
-jobs:
-  build:
+jobs: 
+    test:  # Define a job named 'test'
+        name: Run unit tests  # A more descriptive name for the job
+        runs-on: ubuntu-22.04  # Specify the runner environment (Ubuntu 22.04)
 
-    runs-on: ubuntu-latest
-    strategy:
-      max-parallel: 4
-      matrix:
-        python-version: [3.9]
-    
-    services:
-      postgres:
-        image: postgres:15
-        env:
-          POSTGRES_DB: postgres
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd="pg_isready -U postgres"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=5
+        steps:  # Steps to be run as part of this job
+            - name: Login to Docker Hub  # Step 1: Log in to Docker Hub
+              uses: docker/login-action@v1  # Use the docker/login-action to log in to Docker Hub
+              with:
+                username: ${{ secrets.DOCKERHUB_USERNAME }}  # Use the stored Docker Hub username
+                password: ${{ secrets.DOCKERHUB_TOKEN }}  # Use the stored Docker Hub token for authentication
 
-    environment: test
+            - name: Checkout  # Step 2: Checkout the repository code
+              uses: actions/checkout@v2  # Use the checkout action to checkout the code
 
-    steps:
-    - uses: actions/checkout@v4
-
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-
-    - name: Install Dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-
-    - name: Run Tests
-      run: |
-        python manage.py test
-      env: 
-        SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
-        DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
-        POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-        EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
-        EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
-        EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
-        EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
-        RECAPTCHA_PRIVATE_KEY: ${{ secrets.RECAPTCHA_PRIVATE_KEY }}
-        RECAPTCHA_PUBLIC_KEY: ${{ secrets.RECAPTCHA_PUBLIC_KEY }}
-
-
+            - name: Test  # Step 3: Run the tests
+              run: docker-compose run --rm web sh -c "python3 manage.py test"  # Use Docker Compose to run the Django unit tests
