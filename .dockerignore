@@ -22,6 +22,8 @@ coverage.xml
 Dockerfile
 .docker
 docker-compose.yml
+docker-compose-staging.yml
+docker-compose.prod.ymm
 
 README.md
 **/.DS_Store
