@@ -6,6 +6,9 @@ services:
       - "127.0.0.1:5432:5432"
     environment:
       - DJANGO_ENV=test
+      - POSTGRES_TEST_DB=test
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     env_file:
       - .env.test
     healthcheck:
