@@ -1,14 +1,13 @@
-name: Docker Image CI
+name: Build & push
 
 on:
   push:
-    branches: [ "staging" ]
-  pull_request:
     branches: [ "staging" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: staging
 
     steps:
       - uses: actions/checkout@v4
@@ -19,8 +18,18 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag jonquillebois:latest
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPO }}
 
-      - name: Push the Docker image
-        run: docker push jonquillebois:latest
+      - name: Build and push Docker image
+        id: push
+        uses: docker/build-push-action@3b5e8027fcad23fda98b2e3ac259d8d67585f671
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
