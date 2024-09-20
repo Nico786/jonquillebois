@@ -2,65 +2,37 @@ name: Django CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "dev" ]
   pull_request:
-    branches:
-      - main
+    branches: [ "dev" ]
 
 jobs:
-  test:
+  build:
+
     runs-on: ubuntu-latest
-
-    # Spécifie l'environnement "test"
-    environment: test
-
-    services:
-      postgres:
-        image: postgres:12
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd "pg_isready -U postgres"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.9]
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    - name: Set up Python
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v3
       with:
-        python-version: '3.9'
-
-    - name: Install dependencies
+        python-version: ${{ matrix.python-version }}
+    - name: Install Dependencies
       run: |
+        python -m pip install --upgrade pip
         pip install -r requirements.txt
-
-    - name: Apply migrations
-      run: |
-        python manage.py migrate
-      env:
-        SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        DATABASE_HOST: localhost  # Use localhost since PostgreSQL is running as a service in the action
-        DATABASE_PORT: 5432       # Use the default PostgreSQL port
-        POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-
     - name: Run Tests
+      environment: test
       run: |
         python manage.py test
-      env:
+      env: 
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        DATABASE_HOST: localhost  # Use localhost for the database host
-        DATABASE_PORT: 5432       # Use default PostgreSQL port
+        DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+        DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
         POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
@@ -70,3 +42,4 @@ jobs:
         EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
         RECAPTCHA_PUBLIC_KEY: ${{ secrets.RECAPTCHA_PUBLIC_KEY }}
         RECAPTCHA_PRIVATE_KEY: ${{ secrets.RECAPTCHA_PRIVATE_KEY }}
+
