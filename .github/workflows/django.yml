@@ -22,4 +22,4 @@ jobs:
                 set -o allexport
                 source .env.test
                 set +o allexport
-                docker-compose run --rm web sh -c "python3 manage.py test"
+                docker compose run --rm web sh -c "python3 manage.py test"
