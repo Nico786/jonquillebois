@@ -34,4 +34,11 @@ jobs:
         DATABASE_PORT: ${{ secrets.DATABASE_PORT }}
         POSTGRES_DB: ${{ secrets.DATABASE_DB }}
         POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-        POSTGRES_USER:  ${{ secrets.POSTGRES_USER }}
+        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+        EMAIL_HOST: ${{ secrets.EMAIL_HOST }}
+        EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
+        EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
+        EMAIL_PORT: ${{ secrets.EMAIL_PORT }}
+        RECAPTCHA_PUBLIC_KEY: ${{ secrets.RECAPTCHA_PUBLIC_KEY }}
+        RECAPTCHA_PRIVATE_KEY: ${{ secrets.RECAPTCHA_PRIVATE_KEY }}
+
