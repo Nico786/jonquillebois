@@ -1,6 +1,6 @@
 services:
-  db:
-    container_name: db
+  db-test:
+    container_name: db-test
     image: postgres:15
     ports:
       - "127.0.0.1:5432:5432"
@@ -17,8 +17,8 @@ services:
     networks:
       - jb-network
 
-  web:
-    container_name: web
+  web-test:
+    container_name: web-test
     build:
       context: .
     environment:
