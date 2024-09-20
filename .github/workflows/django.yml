@@ -19,5 +19,17 @@ jobs:
 
             - name: Test
               run: |
+                echo "DEBUG=True" > .env
+                echo "POSTGRES_TEST_DB=test" >> .env
+                echo "POSTGRES_USER=postgres" >> .env
+                echo "POSTGRES_PASSWORD=postgres" >> .env
+                echo "DATABASE_HOST=db" >> .env
+                echo "DATABASE_PORT=5432" >> .env
+                echo "EMAIL_HOST=smtp.gmail.com" >> .env
+                echo "EMAIL_HOST_USER=test@test.com" >> .env
+                echo "EMAIL_HOST_PASSWORD=test" >> .env
+                echo "EMAIL_PORT=465" >> .env
+                echo "RECAPTCHA_PUBLIC_KEY=test" >> .env
+                echo "RECAPTCHA_PRIVATE_KEY=test" >> .env
                 docker compose up &&
                 docker exec -it web /bin/sh python3 manage.py test
