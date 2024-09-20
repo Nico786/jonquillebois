@@ -27,7 +27,7 @@ services:
     env_file:
       - .env.test
     depends_on:
-      db-test:
+      db:
         condition: service_healthy
     restart: always
     networks:
