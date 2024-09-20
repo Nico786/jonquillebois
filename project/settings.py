@@ -99,7 +99,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 if current_env == 'test':
     DATABASES = {
-        'test': {
+        'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': env.str('POSTGRES_TEST_DB'),
             'USER': env.str('POSTGRES_USER'),
