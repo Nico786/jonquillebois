@@ -4,6 +4,8 @@ services:
     image: postgres:15
     ports:
       - "127.0.0.1:5432:5432"
+    environment:
+      - DJANGO_ENV=development
     env_file:
       - .env
     healthcheck:
@@ -21,6 +23,8 @@ services:
     container_name: web
     build:
       context: .
+    environment:
+      - DJANGO_ENV=development
     command: sh -c "python3 manage.py makemigrations app && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"
     env_file:
       - .env

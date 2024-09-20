@@ -4,6 +4,8 @@ services:
     image: postgres:15
     ports:
       - "127.0.0.1:5432:5432"
+    environment:
+      - DJANGO_ENV=test
     env_file:
       - .env.test
     healthcheck:
@@ -19,6 +21,8 @@ services:
     container_name: web
     build:
       context: .
+    environment:
+      - DJANGO_ENV=test
     command: sh -c "python3 manage.py runserver 0.0.0.0:8000 && python3 manage.py test"
     env_file:
       - .env.test
