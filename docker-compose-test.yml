@@ -1,0 +1,42 @@
+services:
+  db:
+    container_name: db
+    image: postgres:15
+    ports:
+      - "127.0.0.1:5432:5432"
+    env_file:
+      - .env.test
+    healthcheck:
+      test: pg_isready -d ${POSTGRES_TEST_DB} -U ${POSTGRES_USER}
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: always
+    networks:
+      - jb-network
+
+  web:
+    container_name: web
+    build:
+      context: .
+    command: sh -c "python3 manage.py runserver 0.0.0.0:8000 && python3 manage.py test"
+    env_file:
+      - .env.test
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+    networks:
+      - jb-network
+
+networks:
+  jb-network:
+    name: jb-network
+    driver: bridge
+
+volumes:
+  pg_data:

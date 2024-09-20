@@ -19,7 +19,5 @@ jobs:
 
             - name: Test
               run: |
-                set -o allexport
-                source .env.test
-                set +o allexport
-                docker compose run --rm web sh -c "python3 manage.py test"
+                export DJANGO_ENV=test
+                docker compose -f docker-compose-test.yml up
