@@ -1,7 +1,7 @@
 name: Build & push
 
 on:
-  push:
+  pull_request:
     branches: [ "staging" ]
 
 jobs:
