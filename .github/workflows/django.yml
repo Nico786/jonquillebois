@@ -20,6 +20,7 @@ jobs:
             - name: Test
               run: |
                 echo "DEBUG=True" > .env
+                echo "SECRET_KEY="test-secret-key" >> .env
                 echo "POSTGRES_DB=test" >> .env
                 echo "POSTGRES_USER=postgres" >> .env
                 echo "POSTGRES_PASSWORD=postgres" >> .env
