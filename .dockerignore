@@ -29,6 +29,8 @@ README.md
 **/.DS_Store
 
 **/.env
+**/.env.staging
+**/.env.production
 **/venv
 **/myvenv
 **/env
