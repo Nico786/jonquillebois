@@ -145,7 +145,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 #Where are static files for dev:
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'app/static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 #After collectstatic - prod:
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') 
 # Uploaded files
