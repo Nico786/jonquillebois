@@ -1,8 +1,8 @@
 FROM python:3.9-alpine
 ENV PYTHONBUFFERED=1
-WORKDIR /usr/src/app
+RUN mkdir /jonquillebois
+WORKDIR /jonquillebois
 RUN pip install --upgrade pip
-COPY requirements.txt /usr/src/app/
-RUN pip install -r requirements.txt
-COPY . /usr/src/app/
-EXPOSE 8000
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
