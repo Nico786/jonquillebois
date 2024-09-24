@@ -39,8 +39,7 @@ else:
     SESSION_COOKIE_SECURE = False
     EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 
-ALLOWED_HOSTS = ["127.0.0.1"]
-
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=["127.0.0.1"])
 
 # Application definition
 
