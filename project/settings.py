@@ -33,11 +33,13 @@ if not DEBUG:  # prod
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 else:
     CSRF_COOKIE_SECURE = False
     SECURE_SSL_REDIRECT = False
     SESSION_COOKIE_SECURE = False
     EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
+    SECURE_PROXY_SSL_HEADER = None
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=["127.0.0.1"])
 
