@@ -7,3 +7,4 @@ colorlog>=6.8.2
 django-recaptcha==4.0.0
 django-axes==6.5.1
 gunicorn==20.1.0
+django-admin-sortable2==2.2.3

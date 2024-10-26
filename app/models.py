@@ -1,6 +1,6 @@
 from django.db.models import Model
 from django.contrib.auth.models import AbstractUser
-from django.db.models import CharField, TextField, ImageField
+from django.db.models import CharField, TextField, ImageField, IntegerField
 from django.core.exceptions import ValidationError
 
 class CustomUser(AbstractUser):
@@ -19,9 +19,11 @@ class Realisation(Model):
   picture_3 = ImageField(upload_to='images/', blank=True, null=True, verbose_name="Photo secondaire")
   picture_4 = ImageField(upload_to='images/', blank=True, null=True, verbose_name="Photo secondaire")
   picture_5 = ImageField(upload_to='images/', blank=True, null=True, verbose_name="Photo secondaire")
+  position = IntegerField(default=0)
     
   class Meta:
     abstract = True
+    ordering = ['position']
 
   def __str__(self):
     return self.title
@@ -33,8 +35,10 @@ class Realisation(Model):
 
 class Arrangement(Realisation):
   class Meta:
+    ordering = ['position']
     verbose_name = "Agencement"
 
 class Furniture(Realisation):
   class Meta:
+    ordering = ['position']
     verbose_name = "Mobilier"
