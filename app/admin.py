@@ -4,7 +4,7 @@ from .models import CustomUser, Arrangement, Furniture
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from adminsortable2.admin import SortableAdminMixin
-from forms import StaffUserUpdateForm
+from .forms import StaffUserUpdateForm
 
 admin.site.site_header = "jonquilleBois - Administration"
 
