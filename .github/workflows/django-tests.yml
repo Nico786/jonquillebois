@@ -33,4 +33,4 @@ jobs:
               run: |
                 docker compose up -d &&
                 docker ps -a &&
-                docker exec web /bin/sh -c "python3 manage.py test"
+                docker exec web /bin/sh -c "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py test"
