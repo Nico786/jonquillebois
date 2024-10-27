@@ -55,7 +55,8 @@ INSTALLED_APPS = [
     'bootstrap5',
     'django_recaptcha',
     'app',
-    'axes'
+    'axes',
+    'adminsortable2',
 ]
 
 AUTHENTICATION_BACKENDS = [

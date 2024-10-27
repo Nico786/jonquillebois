@@ -85,28 +85,28 @@ def contact(request):
   
   if form.is_valid():
     name = form.cleaned_data['name']
-    user_email = form.cleaned_data['email']  #mail de l'expediteur
+    customer_email = form.cleaned_data['email']
     subject = form.cleaned_data['subject']
     message = form.cleaned_data['message']
-    full_message = f"Nom : {name}\nAdresse email : {user_email}\n\n{message}"
+    full_message = f"Nom : {name}\nAdresse email : {customer_email}\n\n{message}"
     
     if user and user.email:
         try:
           email = EmailMessage(
             subject,
             full_message,
-            user_email,  # Expéditeur (visiteur)
-            [user.email],  # Destinataire (user.email)
-            headers={'Reply-To': user_email}  # Pour que les réponses aillent à l'email fourni
+            customer_email,  # Expéditeur
+            [user.email],  # Destinataire
+            headers={'Reply-To': customer_email}  # réponses sur la boite du client
           )
-          print("Sending email...")
           email.send(fail_silently=False)
           messages.success(request, "Votre message a été envoyé avec succès.")
         except Exception as e:
           messages.error(request, "Impossible d'envoyer l'email pour le moment. Veuillez réessayer plus tard.")
           logger.exception(f"Erreur inattendue: {str(e)}")
     else:
-      messages.error(request, "Impossible d'envoyer l'email pour le moment. Veuillez réessayer plus tard.")
+      messages.error(request, "La boite mail jonquilleBois est temporairement indisponible. Veuillez réessayer plus tard.")
+      logger.error("Boite mail jonquillebois introuvable dans la base de données.")
       
   context = {
     'form': form,

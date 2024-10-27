@@ -3,6 +3,8 @@ from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser, Arrangement, Furniture
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
+from adminsortable2.admin import SortableAdminMixin
+#from .forms import StaffUserUpdateForm
 
 admin.site.site_header = "jonquilleBois - Administration"
 
@@ -23,8 +25,21 @@ class CustomUserAdmin(UserAdmin):
     )
 
     list_display = ('username', 'email', 'first_name', 'is_staff', 'phone', 'address')
+    
+    # def get_form(self, request, obj=None, **kwargs):
+    #     if obj is not None and request.user.is_staff and not request.user.is_superuser:
+    #         if request.user == obj:
+    #             self.form = StaffUserUpdateForm
+    #     return super().get_form(request, obj, **kwargs)
+    
+    # def get_queryset(self, request):
+    #     qs = super().get_queryset(request)
+    #     if request.user.is_staff and not request.user.is_superuser:
+    #         # l'utilisateur is_staff ne peut voir que son propre compte
+    #         return qs.filter(id=request.user.id)
+    #     return qs
 
-class RealisationAdmin(admin.ModelAdmin):
+class RealisationAdmin(SortableAdminMixin,admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         try:
             obj.clean()
@@ -32,7 +47,7 @@ class RealisationAdmin(admin.ModelAdmin):
             self.message_user(request, str(e), level=messages.ERROR)
             return
         super().save_model(request, obj, form, change)
-    list_display = ('title', 'description', 'main_picture')
+    list_display = ('title', 'description', 'main_picture', 'position')
 
 @admin.register(Arrangement)
 class ArrangementAdmin(RealisationAdmin):
